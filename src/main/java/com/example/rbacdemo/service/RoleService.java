@@ -1,18 +1,32 @@
 package com.example.rbacdemo.service;
 
 import com.example.rbacdemo.model.Role;
-import com.example.rbacdemo.repository.RoleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
-public class RoleService {
-    @Autowired
-    private RoleRepository roleRepository;
+import java.util.List;
+import java.util.Set;
 
-    public Role createRole(String name) {
-        Role role = new Role();
-        role.setName(name);
-        return roleRepository.save(role);
-    }
+public interface RoleService {
+
+    /**
+     * 创建新角色
+     *
+     * @param name 角色名称
+     * @return 创建成功的角色信息
+     */
+    Role createRole(String name);
+
+    /**
+     * 获取所有角色
+     *
+     * @return 角色列表
+     */
+    List<Role> findAllRoles();
+
+    /**
+     * 为角色分配权限
+     *
+     * @param roleId        角色ID
+     * @param permissionIds 权限ID集合
+     */
+    void assignPermissionsToRole(Long roleId, Set<Long> permissionIds);
 } 

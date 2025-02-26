@@ -1,25 +1,50 @@
 package com.example.rbacdemo.service;
 
 import com.example.rbacdemo.model.User;
-import com.example.rbacdemo.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
-@Service
-public class UserService {
-    @Autowired
-    private UserRepository userRepository;
+import java.util.List;
+import java.util.Set;
 
-    @Autowired
-    private PasswordEncoder bCryptPasswordEncoder;
+public interface UserService {
 
-    public User registerUser(String username, String email, String password) {
-        User user = new User();
-        user.setUsername(username);
-        user.setEmail(email);
-        user.setPassword(bCryptPasswordEncoder.encode(password));
-        return userRepository.save(user);
-    }
+    /**
+     * 注册新用户
+     *
+     * @param username 用户名
+     * @param email    邮箱
+     * @param password 密码
+     * @return 注册成功的用户信息
+     */
+    User registerUser(String username, String email, String password);
+
+    /**
+     * 根据用户名查找用户
+     *
+     * @param username 用户名
+     * @return 用户信息
+     */
+    User findByUsername(String username);
+
+    /**
+     * 获取所有用户
+     *
+     * @return 用户列表
+     */
+    List<User> findAllUsers();
+
+    /**
+     * 根据ID查找用户
+     *
+     * @param id 用户ID
+     * @return 用户信息
+     */
+    User findUserById(Long id);
+
+    /**
+     * 为用户分配角色
+     *
+     * @param userId  用户ID
+     * @param roleIds 角色ID集合
+     */
+    void assignRolesToUser(Long userId, Set<Long> roleIds);
 } 
