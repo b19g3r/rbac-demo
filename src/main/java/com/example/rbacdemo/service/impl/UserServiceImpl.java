@@ -19,47 +19,48 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
+	private final UserRepository userRepository;
 
-    @Override
-    public User registerUser(String username, String email, String password) {
-        User user = new User();
-        user.setUsername(username);
-        user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(password));
-        user.setRoles(new HashSet<>());
-        return userRepository.save(user);
-    }
+	private final RoleRepository roleRepository;
 
-    @Override
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("用户不存在: " + username));
-    }
+	private final PasswordEncoder passwordEncoder;
 
-    @Override
-    public List<User> findAllUsers() {
-        return userRepository.findAll();
-    }
+	@Override
+	public User registerUser(String username, String email, String password) {
+		User user = new User();
+		user.setUsername(username);
+		user.setEmail(email);
+		user.setPassword(passwordEncoder.encode(password));
+		user.setRoles(new HashSet<>());
+		return userRepository.save(user);
+	}
 
-    @Override
-    public User findUserById(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("用户不存在: ID=" + id));
-    }
+	@Override
+	public User findByUsername(String username) {
+		return userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("用户不存在: " + username));
+	}
 
-    @Override
-    @Transactional
-    public void assignRolesToUser(Long userId, Set<Long> roleIds) {
-        User user = findUserById(userId);
-        Set<Role> roles = roleIds.stream()
-                .map(roleId -> roleRepository.findById(roleId)
-                        .orElseThrow(() -> new RuntimeException("角色不存在: ID=" + roleId)))
-                .collect(Collectors.toSet());
+	@Override
+	public List<User> findAllUsers() {
+		return userRepository.findAll();
+	}
 
-        user.setRoles(roles);
-        userRepository.save(user);
-    }
+	@Override
+	public User findUserById(Long id) {
+		return userRepository.findById(id).orElseThrow(() -> new RuntimeException("用户不存在: ID=" + id));
+	}
+
+	@Override
+	@Transactional
+	public void assignRolesToUser(Long userId, Set<Long> roleIds) {
+		User user = findUserById(userId);
+		Set<Role> roles = roleIds.stream()
+			.map(roleId -> roleRepository.findById(roleId)
+				.orElseThrow(() -> new RuntimeException("角色不存在: ID=" + roleId)))
+			.collect(Collectors.toSet());
+
+		user.setRoles(roles);
+		userRepository.save(user);
+	}
+
 }

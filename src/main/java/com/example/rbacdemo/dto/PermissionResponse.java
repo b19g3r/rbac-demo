@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PermissionResponse {
-    private Long id;
-    private String name;
-} 
+
+	private Long id;
+
+	private String name;
+
+}

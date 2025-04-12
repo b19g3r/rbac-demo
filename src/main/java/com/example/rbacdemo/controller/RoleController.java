@@ -18,60 +18,57 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RoleController {
 
-    private final RoleService roleService;
+	private final RoleService roleService;
 
-    /**
-     * 获取所有角色
-     *
-     * @return 角色列表
-     */
-    @GetMapping
-    public ResponseEntity<List<RoleResponse>> getAllRoles() {
-        List<Role> roles = roleService.findAllRoles();
+	/**
+	 * 获取所有角色
+	 * @return 角色列表
+	 */
+	@GetMapping
+	public ResponseEntity<List<RoleResponse>> getAllRoles() {
+		List<Role> roles = roleService.findAllRoles();
 
-        List<RoleResponse> response = roles.stream()
-                .map(role -> RoleResponse.builder()
-                        .id(role.getId())
-                        .name(role.getName())
-                        .permissions(role.getPermissions())
-                        .build())
-                .collect(Collectors.toList());
+		List<RoleResponse> response = roles.stream()
+			.map(role -> RoleResponse.builder()
+				.id(role.getId())
+				.name(role.getName())
+				.permissions(role.getPermissions())
+				.build())
+			.collect(Collectors.toList());
 
-        return ResponseEntity.ok(response);
-    }
+		return ResponseEntity.ok(response);
+	}
 
-    /**
-     * 创建新角色
-     *
-     * @param request 角色请求信息
-     * @return 创建成功的角色信息
-     */
-    @PostMapping
-    public ResponseEntity<RoleResponse> createRole(@RequestBody RoleRequest request) {
-        Role role = roleService.createRole(request.getName());
+	/**
+	 * 创建新角色
+	 * @param request 角色请求信息
+	 * @return 创建成功的角色信息
+	 */
+	@PostMapping
+	public ResponseEntity<RoleResponse> createRole(@RequestBody RoleRequest request) {
+		Role role = roleService.createRole(request.getName());
 
-        RoleResponse response = RoleResponse.builder()
-                .id(role.getId())
-                .name(role.getName())
-                .permissions(role.getPermissions())
-                .build();
+		RoleResponse response = RoleResponse.builder()
+			.id(role.getId())
+			.name(role.getName())
+			.permissions(role.getPermissions())
+			.build();
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
+		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+	}
 
-    /**
-     * 为角色分配权限
-     *
-     * @param roleId        角色ID
-     * @param permissionIds 权限ID集合
-     * @return 分配结果
-     */
-    @PutMapping("/{roleId}/permissions")
-    public ResponseEntity<String> assignPermissionsToRole(
-            @PathVariable Long roleId,
-            @RequestBody Set<Long> permissionIds) {
+	/**
+	 * 为角色分配权限
+	 * @param roleId 角色ID
+	 * @param permissionIds 权限ID集合
+	 * @return 分配结果
+	 */
+	@PutMapping("/{roleId}/permissions")
+	public ResponseEntity<String> assignPermissionsToRole(@PathVariable Long roleId,
+			@RequestBody Set<Long> permissionIds) {
 
-        roleService.assignPermissionsToRole(roleId, permissionIds);
-        return ResponseEntity.ok("权限分配成功");
-    }
+		roleService.assignPermissionsToRole(roleId, permissionIds);
+		return ResponseEntity.ok("权限分配成功");
+	}
+
 }

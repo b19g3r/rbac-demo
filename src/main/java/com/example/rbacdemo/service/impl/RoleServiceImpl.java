@@ -18,34 +18,35 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
 
-    private final RoleRepository roleRepository;
-    private final PermissionRepository permissionRepository;
+	private final RoleRepository roleRepository;
 
-    @Override
-    public Role createRole(String name) {
-        Role role = new Role();
-        role.setName(name);
-        role.setPermissions(new HashSet<>());
-        return roleRepository.save(role);
-    }
+	private final PermissionRepository permissionRepository;
 
-    @Override
-    public List<Role> findAllRoles() {
-        return roleRepository.findAll();
-    }
+	@Override
+	public Role createRole(String name) {
+		Role role = new Role();
+		role.setName(name);
+		role.setPermissions(new HashSet<>());
+		return roleRepository.save(role);
+	}
 
-    @Override
-    @Transactional
-    public void assignPermissionsToRole(Long roleId, Set<Long> permissionIds) {
-        Role role = roleRepository.findById(roleId)
-                .orElseThrow(() -> new RuntimeException("角色不存在: ID=" + roleId));
+	@Override
+	public List<Role> findAllRoles() {
+		return roleRepository.findAll();
+	}
 
-        Set<Permission> permissions = permissionIds.stream()
-                .map(permissionId -> permissionRepository.findById(permissionId)
-                        .orElseThrow(() -> new RuntimeException("权限不存在: ID=" + permissionId)))
-                .collect(Collectors.toSet());
+	@Override
+	@Transactional
+	public void assignPermissionsToRole(Long roleId, Set<Long> permissionIds) {
+		Role role = roleRepository.findById(roleId).orElseThrow(() -> new RuntimeException("角色不存在: ID=" + roleId));
 
-        role.setPermissions(permissions);
-        roleRepository.save(role);
-    }
-} 
+		Set<Permission> permissions = permissionIds.stream()
+			.map(permissionId -> permissionRepository.findById(permissionId)
+				.orElseThrow(() -> new RuntimeException("权限不存在: ID=" + permissionId)))
+			.collect(Collectors.toSet());
+
+		role.setPermissions(permissions);
+		roleRepository.save(role);
+	}
+
+}

@@ -15,38 +15,32 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**", "/login", "/register", "/css/**", "/js/**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/dashboard")
-                        .permitAll()
-                )
-                .logout(logout -> logout
-                        .logoutSuccessUrl("/login?logout")
-                        .permitAll()
-                )
-                .rememberMe(remember -> remember
-                        .alwaysRemember(false)
-                        .tokenValiditySeconds(86400)
-                );
-        return http.build();
-    }
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.csrf(AbstractHttpConfigurer::disable)
+			.authorizeHttpRequests(
+					auth -> auth.requestMatchers("/api/auth/**", "/login", "/register", "/css/**", "/js/**")
+						.permitAll()
+						.anyRequest()
+						.authenticated())
+			.formLogin(form -> form.loginPage("/login")
+				.loginProcessingUrl("/login")
+				.defaultSuccessUrl("/dashboard")
+				.permitAll())
+			.logout(logout -> logout.logoutSuccessUrl("/login?logout").permitAll())
+			.rememberMe(remember -> remember.alwaysRemember(false).tokenValiditySeconds(86400));
+		return http.build();
+	}
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
-} 
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+			throws Exception {
+		return authenticationConfiguration.getAuthenticationManager();
+	}
+
+}

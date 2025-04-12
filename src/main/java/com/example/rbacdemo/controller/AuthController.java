@@ -23,59 +23,51 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final UserService userService;
-    private final AuthenticationManager authenticationManager;
+	private final UserService userService;
 
-    /**
-     * 用户注册API
-     *
-     * @param request 注册请求信息
-     * @return 注册成功的用户信息
-     */
-    @PostMapping("/register")
-    public ResponseEntity<UserResponse> register(@RequestBody RegisterRequest request) {
-        User user = userService.registerUser(
-                request.getUsername(),
-                request.getEmail(),
-                request.getPassword()
-        );
+	private final AuthenticationManager authenticationManager;
 
-        UserResponse response = UserResponse.builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .roles(user.getRoles())
-                .build();
+	/**
+	 * 用户注册API
+	 * @param request 注册请求信息
+	 * @return 注册成功的用户信息
+	 */
+	@PostMapping("/register")
+	public ResponseEntity<UserResponse> register(@RequestBody RegisterRequest request) {
+		User user = userService.registerUser(request.getUsername(), request.getEmail(), request.getPassword());
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
+		UserResponse response = UserResponse.builder()
+			.id(user.getId())
+			.username(user.getUsername())
+			.email(user.getEmail())
+			.roles(user.getRoles())
+			.build();
 
-    /**
-     * 用户登录API
-     *
-     * @param request 登录请求信息
-     * @return 登录成功的令牌和用户信息
-     */
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
-                        request.getPassword()
-                )
-        );
+		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+	}
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+	/**
+	 * 用户登录API
+	 * @param request 登录请求信息
+	 * @return 登录成功的令牌和用户信息
+	 */
+	@PostMapping("/login")
+	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+		Authentication authentication = authenticationManager
+			.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 
-        User user = userService.findByUsername(request.getUsername());
+		SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        LoginResponse response = LoginResponse.builder()
-                .userId(user.getId())
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .message("登录成功")
-                .build();
+		User user = userService.findByUsername(request.getUsername());
 
-        return ResponseEntity.ok(response);
-    }
-} 
+		LoginResponse response = LoginResponse.builder()
+			.userId(user.getId())
+			.username(user.getUsername())
+			.email(user.getEmail())
+			.message("登录成功")
+			.build();
+
+		return ResponseEntity.ok(response);
+	}
+
+}

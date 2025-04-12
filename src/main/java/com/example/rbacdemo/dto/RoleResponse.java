@@ -13,7 +13,11 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoleResponse {
-    private Long id;
-    private String name;
-    private Set<Permission> permissions;
-} 
+
+	private Long id;
+
+	private String name;
+
+	private Set<Permission> permissions;
+
+}

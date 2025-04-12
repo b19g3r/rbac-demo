@@ -16,62 +16,58 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+	private final UserService userService;
 
-    /**
-     * 获取所有用户信息
-     *
-     * @return 用户列表
-     */
-    @GetMapping
-    public ResponseEntity<List<UserResponse>> getAllUsers() {
-        List<User> users = userService.findAllUsers();
+	/**
+	 * 获取所有用户信息
+	 * @return 用户列表
+	 */
+	@GetMapping
+	public ResponseEntity<List<UserResponse>> getAllUsers() {
+		List<User> users = userService.findAllUsers();
 
-        List<UserResponse> response = users.stream()
-                .map(user -> UserResponse.builder()
-                        .id(user.getId())
-                        .username(user.getUsername())
-                        .email(user.getEmail())
-                        .roles(user.getRoles())
-                        .build())
-                .collect(Collectors.toList());
+		List<UserResponse> response = users.stream()
+			.map(user -> UserResponse.builder()
+				.id(user.getId())
+				.username(user.getUsername())
+				.email(user.getEmail())
+				.roles(user.getRoles())
+				.build())
+			.collect(Collectors.toList());
 
-        return ResponseEntity.ok(response);
-    }
+		return ResponseEntity.ok(response);
+	}
 
-    /**
-     * 获取指定用户信息
-     *
-     * @param id 用户ID
-     * @return 用户详细信息
-     */
-    @GetMapping("/{id}")
-    public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
-        User user = userService.findUserById(id);
+	/**
+	 * 获取指定用户信息
+	 * @param id 用户ID
+	 * @return 用户详细信息
+	 */
+	@GetMapping("/{id}")
+	public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
+		User user = userService.findUserById(id);
 
-        UserResponse response = UserResponse.builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .roles(user.getRoles())
-                .build();
+		UserResponse response = UserResponse.builder()
+			.id(user.getId())
+			.username(user.getUsername())
+			.email(user.getEmail())
+			.roles(user.getRoles())
+			.build();
 
-        return ResponseEntity.ok(response);
-    }
-    
-    /**
-     * 为用户分配角色
-     *
-     * @param userId  用户ID
-     * @param roleIds 角色ID集合
-     * @return 分配结果
-     */
-    @PutMapping("/{userId}/roles")
-    public ResponseEntity<String> assignRolesToUser(
-            @PathVariable Long userId,
-            @RequestBody Set<Long> roleIds) {
+		return ResponseEntity.ok(response);
+	}
 
-        userService.assignRolesToUser(userId, roleIds);
-        return ResponseEntity.ok("角色分配成功");
-    }
-} 
+	/**
+	 * 为用户分配角色
+	 * @param userId 用户ID
+	 * @param roleIds 角色ID集合
+	 * @return 分配结果
+	 */
+	@PutMapping("/{userId}/roles")
+	public ResponseEntity<String> assignRolesToUser(@PathVariable Long userId, @RequestBody Set<Long> roleIds) {
+
+		userService.assignRolesToUser(userId, roleIds);
+		return ResponseEntity.ok("角色分配成功");
+	}
+
+}

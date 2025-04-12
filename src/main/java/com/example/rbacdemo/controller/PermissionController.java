@@ -17,42 +17,38 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PermissionController {
 
-    private final PermissionService permissionService;
+	private final PermissionService permissionService;
 
-    /**
-     * 获取所有权限
-     *
-     * @return 权限列表
-     */
-    @GetMapping
-    public ResponseEntity<List<PermissionResponse>> getAllPermissions() {
-        List<Permission> permissions = permissionService.findAllPermissions();
+	/**
+	 * 获取所有权限
+	 * @return 权限列表
+	 */
+	@GetMapping
+	public ResponseEntity<List<PermissionResponse>> getAllPermissions() {
+		List<Permission> permissions = permissionService.findAllPermissions();
 
-        List<PermissionResponse> response = permissions.stream()
-                .map(permission -> PermissionResponse.builder()
-                        .id(permission.getId())
-                        .name(permission.getName())
-                        .build())
-                .collect(Collectors.toList());
+		List<PermissionResponse> response = permissions.stream()
+			.map(permission -> PermissionResponse.builder().id(permission.getId()).name(permission.getName()).build())
+			.collect(Collectors.toList());
 
-        return ResponseEntity.ok(response);
-    }
+		return ResponseEntity.ok(response);
+	}
 
-    /**
-     * 创建新权限
-     *
-     * @param request 权限请求信息
-     * @return 创建成功的权限信息
-     */
-    @PostMapping
-    public ResponseEntity<PermissionResponse> createPermission(@RequestBody PermissionRequest request) {
-        Permission permission = permissionService.createPermission(request.getName());
+	/**
+	 * 创建新权限
+	 * @param request 权限请求信息
+	 * @return 创建成功的权限信息
+	 */
+	@PostMapping
+	public ResponseEntity<PermissionResponse> createPermission(@RequestBody PermissionRequest request) {
+		Permission permission = permissionService.createPermission(request.getName());
 
-        PermissionResponse response = PermissionResponse.builder()
-                .id(permission.getId())
-                .name(permission.getName())
-                .build();
+		PermissionResponse response = PermissionResponse.builder()
+			.id(permission.getId())
+			.name(permission.getName())
+			.build();
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
-} 
+		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+	}
+
+}
