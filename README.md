@@ -185,6 +185,11 @@ Maven插件配置：
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-maven-plugin</artifactId>
         </plugin>
+        <plugin>
+            <groupId>io.spring.javaformat</groupId>
+            <artifactId>spring-javaformat-maven-plugin</artifactId>
+            <version>0.0.43</version>
+        </plugin>
     </plugins>
 </build>
 ```
@@ -194,7 +199,13 @@ Gradle插件配置：
 plugins {
     id 'org.springframework.boot' version '3.4.3'
     id 'io.spring.dependency-management' version '1.1.4'
+    id 'io.spring.javaformat' version '0.0.43'
     id 'java'
+}
+
+// 可选：配置Java格式化任务
+tasks.named('check').configure {
+    dependsOn 'verifyFormat'
 }
 ```
 
