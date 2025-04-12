@@ -131,6 +131,102 @@ src/main/java/com/example/rbacdemo/
 2. 系统默认创建了一些基本角色和权限，可以在服务层中查看或修改
 3. 开发环境中，可以使用H2内存数据库进行快速测试
 
+### 从 maven 迁移 到 gradle
+
+Maven和Gradle是Java生态系统中两个主流的构建工具，以下是从Maven迁移到Gradle时需要注意的主要区别：
+
+#### 1. 构建文件对比
+
+Maven使用XML格式的`pom.xml`，而Gradle使用Groovy或Kotlin DSL的`build.gradle`：
+
+Maven (pom.xml):
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+        <version>3.4.3</version>
+    </dependency>
+</dependencies>
+```
+
+Gradle (build.gradle):
+```groovy
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.4.3'
+}
+```
+
+#### 2. 依赖管理
+
+Maven的依赖范围与Gradle的配置对应关系：
+- compile -> implementation
+- runtime -> runtimeOnly
+- provided -> compileOnly
+- test -> testImplementation
+
+#### 3. 常用命令对比
+
+| Maven命令 | Gradle命令 | 说明 |
+|-----------|------------|------|
+| mvn clean | gradle clean | 清理构建目录 |
+| mvn compile | gradle compileJava | 编译源代码 |
+| mvn test | gradle test | 运行测试 |
+| mvn package | gradle build | 打包项目 |
+| mvn install | gradle publishToMavenLocal | 安装到本地仓库 |
+
+#### 4. 插件使用
+
+Maven插件配置：
+```xml
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+    </plugins>
+</build>
+```
+
+Gradle插件配置：
+```groovy
+plugins {
+    id 'org.springframework.boot' version '3.4.3'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'java'
+}
+```
+
+#### 5. 其他重要区别
+
+- **构建性能**：Gradle通常比Maven更快，因为它支持增量构建和构建缓存
+- **灵活性**：Gradle提供了更灵活的构建脚本，可以使用Groovy或Kotlin编写自定义任务
+- **依赖解析**：Gradle的依赖解析更智能，可以自动处理依赖冲突
+- **多项目构建**：Gradle对多项目构建的支持更好，配置更简洁
+
+#### 6. 常用Gradle任务
+
+```bash
+# 列出项目中所有可用的任务
+./gradlew tasks
+
+# 构建项目
+./gradlew build
+
+# 运行应用（Spring Boot）
+./gradlew bootRun
+
+# 清理构建目录
+./gradlew clean
+
+# 运行测试
+./gradlew test
+
+# 生成项目报告
+./gradlew projectReport
+```
+
 ## 贡献指南
 
 1. Fork本仓库
