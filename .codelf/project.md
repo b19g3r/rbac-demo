@@ -1,0 +1,263 @@
+## {Project Name}
+> The technologies, tool libraries, and corresponding dependency versions used in the project are as follows:
+> TechStack1（version）、TechStack2（version）
+
+
+## Structrue (init from project tree)
+
+> It is essential to consistently refine the analysis down to the file level — this level of granularity is of utmost importance.
+
+> If the number of files is too large, you should at least list all the directories, and provide comments for the parts you consider particularly important.
+
+> In the code block below, add comments to the directories/files to explain their functionality and usage scenarios.
+```
+root
+- .codelf
+- .dockerignore
+- .git
+- .gitattributes
+- .gitignore
+- .gradle
+    - 8.12.1
+        - checksums
+            - checksums.lock
+            - md5-checksums.bin
+            - sha1-checksums.bin
+        - executionHistory
+            - executionHistory.bin
+            - executionHistory.lock
+        - expanded
+        - fileChanges
+            - last-build.bin
+        - fileHashes
+            - fileHashes.bin
+            - fileHashes.lock
+            - resourceHashesCache.bin
+        - gc.properties
+        - vcsMetadata
+    - 8.13
+        - checksums
+            - checksums.lock
+        - executionHistory
+            - executionHistory.bin
+            - executionHistory.lock
+        - expanded
+        - fileChanges
+            - last-build.bin
+        - fileHashes
+            - fileHashes.bin
+            - fileHashes.lock
+            - resourceHashesCache.bin
+        - gc.properties
+        - vcsMetadata
+    - buildOutputCleanup
+        - buildOutputCleanup.lock
+        - cache.properties
+    - file-system.probe
+    - vcs-1
+        - gc.properties
+    - workspace-id.txt
+    - workspace-id.txt.lock
+- .idea
+    - .gitignore
+    - AnyDoorSettingsState.xml
+    - compiler.xml
+    - dataSources
+        - 888ce065-07d1-4f75-bbb8-cfa60728dffa
+            - storage_v2
+                - _src_
+                    - schema
+                        - information_schema.FNRwLQ.meta
+                        - mysql.osA4Bg.meta
+                        - performance_schema.kIw0nw.meta
+                        - rbac_demo.sItChA.meta
+                        - sys.zb4BAA.meta
+        - 888ce065-07d1-4f75-bbb8-cfa60728dffa.xml
+    - dataSources.local.xml
+    - dataSources.xml
+    - encodings.xml
+    - git_toolbox_blame.xml
+    - git_toolbox_prj.xml
+    - gradle.xml
+    - misc.xml
+    - modules
+        - rbac-demo.main.iml
+    - modules.xml
+    - vcs.xml
+    - workspace.xml
+- .vscode
+    - settings.json
+- Dockerfile
+- README.md
+- build
+    - classes
+        - java
+            - main
+                - com
+                    - example
+                        - rbacdemo
+                            - RbacDemoApplication.class
+                            - config
+                                - SecurityConfig.class
+                                - WebConfig.class
+                            - controller
+                                - AuthController.class
+                                - DashboardController.class
+                                - LoginController.class
+                                - PermissionController.class
+                                - RegisterController.class
+                                - RoleController.class
+                                - UserController.class
+                            - dto
+                                - LoginRequest$LoginRequestBuilder.class
+                                - LoginRequest.class
+                                - LoginResponse$LoginResponseBuilder.class
+                                - LoginResponse.class
+                                - PermissionRequest$PermissionRequestBuilder.class
+                                - PermissionRequest.class
+                                - PermissionResponse$PermissionResponseBuilder.class
+                                - PermissionResponse.class
+                                - RegisterRequest$RegisterRequestBuilder.class
+                                - RegisterRequest.class
+                                - RoleRequest$RoleRequestBuilder.class
+                                - RoleRequest.class
+                                - RoleResponse$RoleResponseBuilder.class
+                                - RoleResponse.class
+                                - UserResponse$UserResponseBuilder.class
+                                - UserResponse.class
+                            - model
+                                - Permission.class
+                                - Role.class
+                                - User.class
+                            - repository
+                                - PermissionRepository.class
+                                - RoleRepository.class
+                                - UserRepository.class
+                            - service
+                                - PermissionService.class
+                                - RoleService.class
+                                - UserService.class
+                                - impl
+                                    - AuthUserDetailsService.class
+                                    - PermissionServiceImpl.class
+                                    - RoleServiceImpl.class
+                                    - UserServiceImpl.class
+            - test
+    - generated
+        - sources
+            - annotationProcessor
+                - java
+                    - main
+                    - test
+            - headers
+                - java
+                    - main
+                    - test
+    - libs
+        - rbac-demo-0.0.1-SNAPSHOT-plain.jar
+        - rbac-demo-0.0.1-SNAPSHOT.jar
+    - reports
+        - format
+            - main
+                - check-format.txt
+            - test
+                - check-format.txt
+        - problems
+            - problems-report.html
+        - tests
+    - resolvedMainClassName
+    - resources
+        - main
+            - application.properties
+            - static
+            - templates
+                - dashboard.html
+                - login.html
+                - register.html
+        - test
+    - test-results
+    - tmp
+        - bootJar
+            - MANIFEST.MF
+        - compileJava
+            - compileTransaction
+                - backup-dir
+                - stash-dir
+            - previous-compilation-data.bin
+        - compileTestJava
+            - compileTransaction
+                - backup-dir
+                - stash-dir
+            - previous-compilation-data.bin
+        - jar
+            - MANIFEST.MF
+        - test
+- build.gradle
+- docker
+    - init.sql
+- docker-compose.yml
+- gradle
+    - wrapper
+        - gradle-wrapper.jar
+        - gradle-wrapper.properties
+- gradlew
+- gradlew.bat
+- settings.gradle
+- src
+    - main
+        - java
+            - com
+                - example
+                    - rbacdemo
+                        - RbacDemoApplication.java
+                        - config
+                            - SecurityConfig.java
+                            - WebConfig.java
+                        - controller
+                            - AuthController.java
+                            - DashboardController.java
+                            - LoginController.java
+                            - PermissionController.java
+                            - RegisterController.java
+                            - RoleController.java
+                            - UserController.java
+                        - dto
+                            - LoginRequest.java
+                            - LoginResponse.java
+                            - PermissionRequest.java
+                            - PermissionResponse.java
+                            - RegisterRequest.java
+                            - RoleRequest.java
+                            - RoleResponse.java
+                            - UserResponse.java
+                        - model
+                            - Permission.java
+                            - Role.java
+                            - User.java
+                        - repository
+                            - PermissionRepository.java
+                            - RoleRepository.java
+                            - UserRepository.java
+                        - service
+                            - PermissionService.java
+                            - RoleService.java
+                            - UserService.java
+                            - impl
+                                - AuthUserDetailsService.java
+                                - PermissionServiceImpl.java
+                                - RoleServiceImpl.java
+                                - UserServiceImpl.java
+        - resources
+            - application.properties
+            - static
+            - templates
+                - dashboard.html
+                - login.html
+                - register.html
+    - test
+        - java
+            - com
+                - example
+                    - rbacdemo
+                        - RbacDemoApplicationTests.java
+```

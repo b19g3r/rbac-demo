@@ -249,3 +249,70 @@ tasks.named('check').configure {
 ## 许可证
 
 [MIT](LICENSE)
+
+## Docker 部署
+
+本项目支持使用 Docker 进行部署。我们使用多阶段构建来优化镜像大小，并提供了 docker-compose 配置以便快速部署。系统包含两个主要服务：
+
+1. 应用服务 (app)
+2. MySQL 数据库服务 (mysql)
+
+### 使用 Docker Compose 部署
+
+1. 启动服务
+
+```bash
+docker-compose up -d
+```
+
+2. 查看日志
+
+```bash
+docker-compose logs -f
+```
+
+3. 停止服务
+
+```bash
+docker-compose down
+```
+
+4. 清理数据（慎用）
+
+```bash
+docker-compose down -v
+```
+
+### 环境变量配置
+
+在 `docker-compose.yml` 中可以配置以下环境变量：
+
+应用服务 (app) 环境变量：
+- `SPRING_PROFILES_ACTIVE`: 激活的 Spring profile（默认：prod）
+- `SPRING_DATASOURCE_URL`: 数据库连接 URL
+- `SPRING_DATASOURCE_USERNAME`: 数据库用户名
+- `SPRING_DATASOURCE_PASSWORD`: 数据库密码
+
+MySQL 服务环境变量：
+- `MYSQL_DATABASE`: 数据库名称
+- `MYSQL_USER`: 数据库用户名
+- `MYSQL_PASSWORD`: 数据库密码
+- `MYSQL_ROOT_PASSWORD`: Root 用户密码
+
+### 数据持久化
+
+MySQL 数据通过 Docker volume 进行持久化存储：
+- 数据文件：`mysql_data` volume
+- 初始化脚本：`./docker/init.sql`
+
+### 注意事项
+
+1. 确保 Docker 和 Docker Compose 已正确安装
+2. 生产环境部署时建议：
+   - 修改默认端口
+   - 修改默认数据库密码
+   - 根据实际需求调整 JVM 参数和内存限制
+   - 配置数据库备份策略
+3. 首次启动时，系统会自动执行数据库初始化脚本
+4. 可以通过 `docker-compose logs mysql` 查看数据库日志
+5. 数据库服务启动可能需要一些时间，应用服务会自动等待数据库就绪
